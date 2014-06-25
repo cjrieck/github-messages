@@ -13,12 +13,11 @@ app.use(bodyParser.json());
 app.engine('.hbs', exphbs({defaultLayout: 'main', extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
-app.use("/", express.static(__dirname+"/public"));
-// add other things to serve here
+app.use(express.static(__dirname+"/public"));
 
 app.get("/", function(req, res){
-	// Render template
-	res.send("Hello World");
+	var context = {};
+	res.render("body", context);
 });
 
 var port = Number(process.env.PORT || 5000);
