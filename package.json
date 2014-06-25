@@ -1,0 +1,25 @@
+{
+  "name": "github-messages",
+  "version": "1.0.0",
+  "description": "Chat room with full GitHub integration",
+  "main": "web.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cjrieck/github-messages.git"
+  },
+  "keywords": [
+    "chat",
+    "irc",
+    "git",
+    "github"
+  ],
+  "author": "Clayton Rieck",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cjrieck/github-messages/issues"
+  },
+  "homepage": "https://github.com/cjrieck/github-messages"
+}
