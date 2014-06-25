@@ -4,7 +4,7 @@ var app = express();
 
 app.use(logfmt.requestLogger());
 
-app.get("/", function(){
+app.get("/", function(req, res){
 	// Render template
 	res.send("Hello World");
 });
