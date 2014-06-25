@@ -21,5 +21,9 @@
   "bugs": {
     "url": "https://github.com/cjrieck/github-messages/issues"
   },
-  "homepage": "https://github.com/cjrieck/github-messages"
+  "homepage": "https://github.com/cjrieck/github-messages",
+  "dependencies": {
+    "express": "^4.4.4",
+    "logfmt": "^1.1.2"
+  }
 }
