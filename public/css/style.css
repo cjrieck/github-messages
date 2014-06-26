@@ -45,69 +45,88 @@ table {
 
 /* ----------------- Begin Website Styling ----------------- */
 
+@font-face {
+  font-family: 'Open Sans';
+  font-style: bold;
+  font-weight: 800;
+  src: local('Open Sans'), local('OpenSans'), url(http://themes.googleusercontent.com/static/fonts/opensans/v8/cJZKeOuBrn4kERxqtaUH3bO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
+}
+
 * {
 	box-sizing: border-box;
+	/*font-weight: 700;*/
 }
 
 body {
+	font-family: 'Open Sans';
 	position: fixed;
 	display: block;
+	background-color: inherit;
+
 }
 
 .container {
-	background-color: #D91E18;
-}
-
-.behind {
-	width: 15%;
-	height: 100px;
-
-	position: absolute;
-	background-color: #913D88;
-	top: 0;
-	left: 0;
-	opacity: 0.95;
 }
 
 .app-header {
-	width: 15%;
-	height: 100px;
-
-	position: absolute;
-	background-color: #913D88;
-	top: 0;
-	left: 0;
-	-webkit-filter: blur(5px);
-	-moz-filter: blur(5px);
-	-o-filter: blur(5px);
-	-ms-filter: blur(5px);
-	filter: blur(5px);
-
+	position: relative;
+	background-color: #ec5a4d;
+	width: 100%;
+	height: 50px;
+	border: 1px solid rgba(255,255,255,.15);
+	box-shadow: 1px 1px 4px rgba(0,0,0,.3);
+	z-index: 5;
+	font-size: 1.4rem;
+	opacity: 0.95;
+	/*text-align: center;*/
 }
 
-.header-title {
-	z-index: 2;
+.app-header-title {
+	height: 100%;
+	padding-left: 20px;
+	font-size: 40px;
 }
 
 .members {
 	width: 15%;
 	height: 100%;
-	background-color: white;
+	margin-top: 5px;
+	position: relative;
 	float: left;
 }
 
 .member-names {
+	position: absolute;
+	top: 0;
 	height: 100%;
+	width: 100%;
 	overflow-y: scroll; 
+	font-size: 20px;
 }
 
-.name {
+.person {
 	width: 100%;
 	height: 50px;
 	display: block;
 	border-right: 20px solid white;
 	border-left: 20px solid white;
 	border-bottom: 1px solid #D8D8D8;
+	overflow: hidden;
+}
+
+.name, .gravatar {
+	float: left;
+}
+
+.name {
+	width: 50%;
+	height: 100%;
+	margin-top: 12px;
+}
+
+.gravatar {
+	width: 20%;
+	height: 100%;
 }
 
 .chat-area {
@@ -116,4 +135,10 @@ body {
 	background-color: black;
 	z-index: 2;
 	float: right;
+}
+
+svg {
+  height:0;
+  width: 0;
+  position: absolute;
 }
