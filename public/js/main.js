@@ -68,12 +68,40 @@ $(function(){
 		});
 	}
 
+	function getRepos() {
+		$.ajax({
+			type: "GET",
+			url: "/repos",
+			success: function (data) {
+				console.log(data);
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log(errorThrown);
+			}
+		});
+	}
+
 	function getConversation() {
 		$.ajax({
 			type: "GET",
 			url: ""
 		});
 	}
+
+	$(document).on("click", ".signin", function(e){
+		$(".signin-prompt").removeClass("hidden");
+	});
+
+	$(document).on("click", ".signin-btn", function(e){
+		$(".signin-prompt").removeClass("hidden");
+	});
+
+	$(document).on("click", ".issue-name", function(e){
+		var option = $(e.target).text();
+		if (option == "Create Issue") {
+			getRepos();
+		};
+	});
 
 	$(document).on("click", ".person", function(e){
 		var nameToChat = $(e.target).text();

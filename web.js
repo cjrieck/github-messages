@@ -81,6 +81,15 @@ app.get("/populate/conversation/:requester/:responder", function(){
 	var context = {};
 });
 
+app.get("/repos", function(req, res){
+	github.repos.getAll({type :"all"}, function(err, items){
+		if (err) {
+			res.send(err);
+		};
+		res.send(items);
+	})
+});
+
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
 	console.log("Listening on " + port);
