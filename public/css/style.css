@@ -87,7 +87,7 @@ body {
 	font-size: 40px;
 }
 
-.members {
+.members, .github-options {
 	width: 15%;
 	height: 100%;
 	/*margin-top: 5px;*/
@@ -104,7 +104,7 @@ body {
 	font-size: 20px;
 }
 
-.person {
+.person, .option {
 	width: 100%;
 	height: 75px;
 	display: block;
@@ -118,11 +118,12 @@ body {
 	float: left;
 }
 
-.name {
+.name, .issue-name {
 	width: 50%;
 	height: 100%;
 	margin-top: 25px;
 	margin-left: 10px;
+	cursor: pointer;
 }
 
 .gravatar {
@@ -131,15 +132,66 @@ body {
 	background-size: cover;
 	border-radius: 50%;
 	padding: 5px 5px;
+	cursor: pointer;
 }
 
 .chat-area {
-	width: 85%;
+	width: 70%;
 	height: 100%;
 	background-color: black;
 	z-index: 2;
 	float: right;
 	overflow-y: scroll;
+	border: 1px solid #d8d8d8;
+}
+
+.message-area {
+	height: 70%;
+	width: 100%;
+}
+
+.message {
+	height: 75px;
+	width: 50%;
+	display: block;
+}
+
+.message-body {
+	display: block;
+	height: 100%;
+	width: 40%;
+	float: left;
+	background-color: #d8d8d8;
+	margin-top: 10px;
+}
+
+.left-triangle {
+	width: 0; 
+	height: 0; 
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent; 
+	
+	border-right:10px solid #d8d8d8;
+	float: left;
+	margin-top: 30px;
+}
+
+.message-user-icon{
+	height: 100%;
+	/*width: 50px;*/
+	float: left;
+	margin-left: 5px;
+	padding: 5px;
+}
+
+.github-options {
+	border-left: 1px solid #d8d8d8;
+	float: right;
+}
+
+.issue-name {
+	width: 100%;
+	font-size: 25px;
 }
 
 svg {

@@ -51,9 +51,12 @@ app.get("/conversation/:requester/:responder", function(req, res) {
 	var conversationName = req.params.requester+req.params.responder;
 	firebaseConversations.child(conversationName).once('value', function(snapshot){
 		if (snapshot.val() != null) {
-			var context = {messages: snapshot}
-			console.log("CONTEXT:");
+			var context = snapshot.val();
+			// res.send(context);
+			// console.log("CONTEXT:");
 			console.log(context);
+			// var message = context["mesages"]["ic"]["m"];
+			// context = {messages: message};
 			res.render("messages", _.extend(context, {layout: false}));	
 
 		}
@@ -67,9 +70,15 @@ app.post("/create/conversation/:requester/:responder", function(req, res) {
 	// req.params.requester
 	var conversationName = req.params.requester+req.params.responder;
 	var firebaseUserConversation = new Firebase("https://github-messages.firebaseio.com/conversations/"+conversationName.toString());
-	firebaseUserConversation.set({ messages: [{message: "Talk about anything!"}] } );
-
+	firebaseUserConversation.set({ messages: [{message: "Talk about anything!", avatar_url:"http://upload.wikimedia.org/wikipedia/commons/e/ec/Happy_smiley_face.png"}] } );
 	res.send("created");
+});
+
+app.get("/populate/conversation/:requester/:responder", function(){
+	var conversationName = req.params.requester+req.params.responder;
+	var firebaseUserConversation = new Firebase("https://github-messages.firebaseio.com/conversations/"+conversationName.toString());
+
+	var context = {};
 });
 
 var port = Number(process.env.PORT || 5000);

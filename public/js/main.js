@@ -5,21 +5,6 @@ $(function(){
 	$(".container").height(windowHeight);
 	$(".container").width(windowWidth);
 
-	// var chatRef = new Firebase('https://github-messages.firebaseio.com');
-	// var auth = new FirebaseSimpleLogin(chatRef, function(error, user) {
-	// 	if (error) {
-	// 		// an error occurred while attempting login
-	// 		console.log(error);
-	// 	} 
-	// 	// else if (user) {
-	// 		// user authenticated with Firebase
-	// 		// console.log('User ID: ' + user.uid + ', Provider: ' + user.provider);
-	// 	else {
-	// 		// user is logged out
-	// 		auth.login("github");
-	// 	}
-	// });
-
 	function initialize() 
 	{
 		$.ajax({
@@ -34,19 +19,6 @@ $(function(){
 		});
 	}
 
-	// function signIn() {
-	// 	$.ajax({
-	// 		type: "GET",
-	// 		url: "/signin",
-	// 		success: function() {
-	// 			// show they're signed in
-	// 		}
-	// 		error: function(jqXHR, textStatus, errorThrown) {
-	// 			console.log(errorThrown);
-	// 		}
-	// 	});
-	// }
-
 	// will return a boolean value corresponding to if the conversation between the
 	// 2 people exist or not
 	function checkConversationExists(name) {
@@ -56,10 +28,15 @@ $(function(){
 			success: function(data){
 				if (data == "false") {
 					createConversation(name);
-				};
+				}
+				else {
+					console.log(data);
+					$(".chat-area").css("background-color", "#fff");
+					$(".message-area").html(data);
+				}
 			},
 			error: function(jqXHR, textStatus, errorMessage) {
-				console.log(errorMessage);
+				console.log(textStatus +", "+errorMessage.toString());
 			}
 		});
 	}
@@ -77,9 +54,19 @@ $(function(){
 		});
 	}
 
-	// $(".signin").click(function(){
-	// 	signIn();
-	// });
+	function populateChat(name) {
+		$.ajax({
+			type: "GET",
+			url: "/populate/conversation/cjrieck/"+name, // change cjrieck to be dynamic
+			success: function(data){
+				// populate chat
+				$(".message_area").html(data);
+			},
+			error: function(jqXHR, textStatus, errorMessage) {
+				console.log(errorMessage);
+			}
+		});
+	}
 
 	function getConversation() {
 		$.ajax({
