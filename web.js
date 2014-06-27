@@ -10,6 +10,7 @@ var app = express();
 
 var firebaseRoot = new Firebase("https://github-messages.firebaseio.com/");
 var firebaseMembers = new Firebase("https://github-messages.firebaseio.com/members");
+var firebaseConversations = new Firebase("https://github-messages.firebaseio.com/members");
 // console.log(firebaseMembers);
 
 var github = new GitHubApi({
@@ -43,6 +44,32 @@ app.get("/members", function(req, res){
 		var context = {members: items};
 		res.render("members", _.extend(context, {layout: false}));
 	});
+});
+
+app.get("/conversation/:requester/:responder", function(req, res) {
+	// req.params.requester
+	var conversationName = req.params.requester+req.params.responder;
+	firebaseConversations.child(conversationName).once('value', function(snapshot){
+		if (snapshot != null) {
+			var context = {messages: snapshot}
+			res.render("messages", _.extend(context, {layout: false}));			
+		}
+		else {
+			res.send(false);
+		}
+	});
+});
+
+app.post("/create/conversation/:requester/:responder", function(req, res) {
+	// req.params.requester
+	var conversationName = req.params.requester+req.params.responder;
+
+	firebaseConversations.set({conversationName:{
+													messages: [ {message: "Talk about anything!"} ]
+												}
+	});
+
+	res.send("created");
 });
 
 var port = Number(process.env.PORT || 5000);
