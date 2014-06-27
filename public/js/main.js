@@ -5,6 +5,8 @@ $(function(){
 	$(".container").height(windowHeight);
 	$(".container").width(windowWidth);
 
+	var currentSession;
+
 	function initialize() 
 	{
 		$.ajax({
@@ -33,6 +35,8 @@ $(function(){
 					console.log(data);
 					$(".chat-area").css("background-color", "#fff");
 					$(".message-area").html(data);
+					currentSession = "cjrieck"+name;
+					console.log(currentSession);
 				}
 			},
 			error: function(jqXHR, textStatus, errorMessage) {
@@ -60,7 +64,8 @@ $(function(){
 			url: "/populate/conversation/cjrieck/"+name, // change cjrieck to be dynamic
 			success: function(data){
 				// populate chat
-				$(".message_area").html(data);
+				console.log(data);
+				$(".chat-area .message_area").html(data);
 			},
 			error: function(jqXHR, textStatus, errorMessage) {
 				console.log(errorMessage);
@@ -95,6 +100,19 @@ $(function(){
 		});
 	}
 
+	function postMessage(msgbody) {
+		$.ajax({
+			type: "POST",
+			url: "/message/"+msgbody+"/"+currentSession,
+			success: function(data) {
+				$(".message_area").html(data);
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log(errorThrown);
+			}
+		});
+	}
+
 	function authenticate(user, pwd) {
 		console.log(user);
 		$.ajax({
@@ -104,6 +122,7 @@ $(function(){
 				// console.log(data);
 
 				$(".signin-prompt").addClass("hidden");
+				$(".signin").html(data);
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log(errorThrown);
@@ -111,12 +130,12 @@ $(function(){
 		});
 	}
 
-	function getConversation() {
-		$.ajax({
-			type: "GET",
-			url: ""
-		});
-	}
+	// function getConversation() {
+	// 	$.ajax({
+	// 		type: "GET",
+	// 		url: ""
+	// 	});
+	// }
 
 	$(document).on("click", ".signin", function(e){
 		$(".signin-prompt").removeClass("hidden");
@@ -154,6 +173,15 @@ $(function(){
 		if ( checkConversationExists(nameToChat) ) {
 
 		};
+	});
+
+	$(document).keypress(function(e){
+		if (e.which == 13) {
+			var msgbody = $(".message-body").html();
+			console.log(msgbody);
+			postMessage(msgbody);
+			
+		}
 	});
 
 	initialize();

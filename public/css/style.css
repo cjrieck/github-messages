@@ -149,7 +149,7 @@ body {
 .chat-area {
 	width: 70%;
 	height: 100%;
-	background-color: black;
+	/*background-color: black;*/
 	z-index: 2;
 	float: right;
 	overflow-y: scroll;
@@ -157,14 +157,45 @@ body {
 }
 
 .message-area {
-	height: 70%;
+	height: 89%;
 	width: 100%;
+	overflow: scroll;
+}
+
+.message-area-input {
+	height: 2%;
+	width: 100%;
+	margin-left: 300px;
+	position: fixed;
+
+}
+
+.message-body {
+	height: 10%;
+	width: 100%;
+
+	border: 3px solid #d8d8d8;
+	border-radius: 5px;
+	outline: none;
+
+	-webkit-transition: border-color 0.5s ease;
+	transition: border-color 0.5s ease;
+}
+
+.message-body:focus {
+	border-color: #27ae60;
+
+	-webkit-transition: border-color 0.5s ease;
+	transition: border-color 0.5s ease;
+
 }
 
 .message {
 	height: 75px;
-	width: 50%;
+	width: 100%;
 	display: block;
+	float: left;
+	margin-bottom: 20px;
 }
 
 .message-body {

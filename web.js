@@ -20,6 +20,8 @@ var github = new GitHubApi({
 });
 
 var gitHubUser;
+var newUser;
+var username;
 
 app.use(logfmt.requestLogger());
 app.use(bodyParser.json());
@@ -74,7 +76,7 @@ app.post("/create/conversation/:requester/:responder", function(req, res) {
 	var conversationName = req.params.requester+req.params.responder;
 	var firebaseUserConversation = new Firebase("https://github-messages.firebaseio.com/conversations/"+conversationName.toString());
 	firebaseUserConversation.set({ messages: [{message: "Talk about anything!", avatar_url:"http://upload.wikimedia.org/wikipedia/commons/e/ec/Happy_smiley_face.png"}] } );
-	res.send("created");
+	res.send(conversationName);
 });
 
 app.get("/populate/conversation/:requester/:responder", function(){
@@ -94,25 +96,53 @@ app.get("/repos", function(req, res){
 	};
 });
 
-app.post("/issue/:title/:body", function(req, res){
+app.post("/issue/:repo", function(req, res){
+	var reponame = req.params.repo;
+	var repo = gitHubUser.getRepo(username, reponame);
+
+
+});
+
+app.post("/message/:msgbody/:session", function(req, res){
+	var messageBody = req.params.msgbody;
+	var conversation = req.params.session;
+
+	console.log(messageBody);
 	
+	firebaseConversations.child(conversation).child("messages").push({message: messageBody, avatar_url: "https://avatars.githubusercontent.com/u/1785533?"}, function(err){
+		if (err) {console.log(err)};
+
+		firebaseConversations.child(conversation).once('value', function(snapshot){
+			if (snapshot.val() != null) {
+				var context = snapshot.val();
+				
+				console.log(context);
+			
+				res.render("messages", _.extend(context, {layout: false}));	
+
+			}
+			else {
+				res.send("false");
+			}
+		});
+	});
 });
 
 app.get("/auth/:user/:pwd", function(req, res){
-	var user = req.params.user;
+	username = req.params.user;
 	var pwd = req.params.pwd;
 
-	console.log(user);
+	// console.log(user);
 
 	gitHubUser = new Github({
-		username: user,
+		username: username,
 		password: pwd,
 		auth: "basic"
 	});
 
-	var newUser = gitHubUser.getUser();
+	newUser = gitHubUser.getUser();
 	console.log(newUser);
-	res.send(newUser);
+	res.send(username);
 });
 
 var port = Number(process.env.PORT || 5000);
