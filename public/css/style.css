@@ -138,11 +138,12 @@ body {
 }
 
 .gravatar {
-	width: 20%;
-	height: 100%;
+	width: 25%;
+	height: 65%;
 	background-size: cover;
 	border-radius: 50%;
 	padding: 5px 5px;
+	margin-top: 12px;
 	cursor: pointer;
 }
 
@@ -224,6 +225,7 @@ body {
 	float: left;
 	margin-left: 5px;
 	padding: 5px;
+	border-radius: 50%;
 }
 
 .github-options {
