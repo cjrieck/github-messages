@@ -5,20 +5,20 @@ $(function(){
 	$(".container").height(windowHeight);
 	$(".container").width(windowWidth);
 
-	var chatRef = new Firebase('https://github-messages.firebaseio.com');
-	var auth = new FirebaseSimpleLogin(chatRef, function(error, user) {
-		if (error) {
-			// an error occurred while attempting login
-			console.log(error);
-		} 
-		// else if (user) {
-			// user authenticated with Firebase
-			// console.log('User ID: ' + user.uid + ', Provider: ' + user.provider);
-		} else {
-			// user is logged out
-			auth.login("github");
-		}
-	});
+	// var chatRef = new Firebase('https://github-messages.firebaseio.com');
+	// var auth = new FirebaseSimpleLogin(chatRef, function(error, user) {
+	// 	if (error) {
+	// 		// an error occurred while attempting login
+	// 		console.log(error);
+	// 	} 
+	// 	// else if (user) {
+	// 		// user authenticated with Firebase
+	// 		// console.log('User ID: ' + user.uid + ', Provider: ' + user.provider);
+	// 	else {
+	// 		// user is logged out
+	// 		auth.login("github");
+	// 	}
+	// });
 
 	function initialize() 
 	{
@@ -52,9 +52,9 @@ $(function(){
 	function checkConversationExists(name) {
 		$.ajax({
 			type: "GET",
-			url: "/conversation/cjrieck/"+name // change cjrieck to be dynamic
+			url: "/conversation/cjrieck/"+name, // change cjrieck to be dynamic
 			success: function(data){
-				if (data == false) {
+				if (data == "false") {
 					createConversation(name);
 				};
 			},
@@ -67,7 +67,7 @@ $(function(){
 	function createConversation(name) {
 		$.ajax({
 			type: "POST",
-			url: "/create/conversation/cjrieck/"+name // change cjrieck to be dynamic
+			url: "/create/conversation/cjrieck/"+name, // change cjrieck to be dynamic
 			success: function(data){
 				checkConversationExists(name);
 			},
@@ -88,9 +88,9 @@ $(function(){
 		});
 	}
 
-	$(document).on("click", ".person", function(){
-		var nameToChat = $(this).children(".name").val();
-
+	$(document).on("click", ".person", function(e){
+		var nameToChat = $(e.target).text();
+		console.log(nameToChat);
 		if ( checkConversationExists(nameToChat) ) {
 
 		};

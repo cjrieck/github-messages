@@ -10,7 +10,7 @@ var app = express();
 
 var firebaseRoot = new Firebase("https://github-messages.firebaseio.com/");
 var firebaseMembers = new Firebase("https://github-messages.firebaseio.com/members");
-var firebaseConversations = new Firebase("https://github-messages.firebaseio.com/members");
+var firebaseConversations = new Firebase("https://github-messages.firebaseio.com/conversations");
 // console.log(firebaseMembers);
 
 var github = new GitHubApi({
@@ -50,12 +50,15 @@ app.get("/conversation/:requester/:responder", function(req, res) {
 	// req.params.requester
 	var conversationName = req.params.requester+req.params.responder;
 	firebaseConversations.child(conversationName).once('value', function(snapshot){
-		if (snapshot != null) {
+		if (snapshot.val() != null) {
 			var context = {messages: snapshot}
-			res.render("messages", _.extend(context, {layout: false}));			
+			console.log("CONTEXT:");
+			console.log(context);
+			res.render("messages", _.extend(context, {layout: false}));	
+
 		}
 		else {
-			res.send(false);
+			res.send("false");
 		}
 	});
 });
@@ -63,11 +66,8 @@ app.get("/conversation/:requester/:responder", function(req, res) {
 app.post("/create/conversation/:requester/:responder", function(req, res) {
 	// req.params.requester
 	var conversationName = req.params.requester+req.params.responder;
-
-	firebaseConversations.set({conversationName:{
-													messages: [ {message: "Talk about anything!"} ]
-												}
-	});
+	var firebaseUserConversation = new Firebase("https://github-messages.firebaseio.com/conversations/"+conversationName.toString());
+	firebaseUserConversation.set({ messages: [{message: "Talk about anything!"}] } );
 
 	res.send("created");
 });
