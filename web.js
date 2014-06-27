@@ -9,6 +9,9 @@ var GitHubApi = require("github");
 var app = express();
 
 var firebaseRoot = new Firebase("https://github-messages.firebaseio.com/");
+var firebaseMembers = new Firebase("https://github-messages.firebaseio.com/members");
+// console.log(firebaseMembers);
+
 var github = new GitHubApi({
     // required
     version: "3.0.0",
@@ -23,16 +26,8 @@ app.set('view engine', '.hbs');
 app.use(express.static(__dirname+"/public"));
 
 app.get("/", function(req, res){
-	// var RZMembers = /orgs/:org/members
-	var context = {};//{members: };
-	github.orgs.getMembers({org: "Raizlabs"}, function(err, items){
-		if (err) {
-			res.send(err);
-		}
-
-		var context = {members: items};
-		res.render("body", context);
-	});
+	var context = {};
+	res.render("body", context);
 });
 
 app.get("/members", function(req, res){
@@ -40,6 +35,10 @@ app.get("/members", function(req, res){
 		if (err) {
 			res.send(err);
 		}
+
+		firebaseMembers.set(items, function(err){
+			if (err) {console.log(err)};
+		});
 
 		var context = {members: items};
 		res.render("members", _.extend(context, {layout: false}));
