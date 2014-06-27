@@ -74,6 +74,36 @@ $(function(){
 			url: "/repos",
 			success: function (data) {
 				console.log(data);
+				$.each(data, function(index, value){
+					$(".options ul").append("<li class='repo-name'>"+value["name"]+"</li>");
+				});
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log(errorThrown);
+			}
+		});
+	}
+
+	function createNewIssue(title, body) {
+		$.ajax({
+			type: "POST",
+			url:"/issue/"+title+"/"+body,
+			success: function(data) {
+				$(".issue-form").addClass("hidden");
+				console.log("success");
+			}
+		});
+	}
+
+	function authenticate(user, pwd) {
+		console.log(user);
+		$.ajax({
+			type: "GET",
+			url: "/auth/"+user+"/"+pwd,
+			success: function(data) {
+				// console.log(data);
+
+				$(".signin-prompt").addClass("hidden");
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log(errorThrown);
@@ -93,13 +123,28 @@ $(function(){
 	});
 
 	$(document).on("click", ".signin-btn", function(e){
-		$(".signin-prompt").removeClass("hidden");
+		var user = $(".user").val();
+		var pwd = $(".password").val();
+		authenticate(user, pwd);
+	});
+
+	$(document).on("click", ".cancel-btn", function(e){
+		$(".signin-prompt").addClass("hidden");
 	});
 
 	$(document).on("click", ".issue-name", function(e){
 		var option = $(e.target).text();
 		if (option == "Create Issue") {
 			getRepos();
+		};
+	});
+
+	$(document).on("click", ".repo-name", function(e){
+		$(".issue-form").removeClass("hidden");
+		var title = $(e.target).val();
+		if (title != "") {
+			var body = $(e.target).val();
+			createNewIssue(title, body);
 		};
 	});
 

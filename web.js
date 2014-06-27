@@ -6,6 +6,7 @@ var Firebase = require("firebase");
 var _ = require('lodash')
 var bodyParser = require("body-parser");
 var GitHubApi = require("github");
+var Github = require("github-api");
 var app = express();
 
 var firebaseRoot = new Firebase("https://github-messages.firebaseio.com/");
@@ -17,6 +18,8 @@ var github = new GitHubApi({
     // required
     version: "3.0.0",
 });
+
+var gitHubUser;
 
 app.use(logfmt.requestLogger());
 app.use(bodyParser.json());
@@ -82,12 +85,34 @@ app.get("/populate/conversation/:requester/:responder", function(){
 });
 
 app.get("/repos", function(req, res){
-	github.repos.getAll({type :"all"}, function(err, items){
-		if (err) {
-			res.send(err);
-		};
-		res.send(items);
-	})
+	if (gitHubUser) {
+		var user = gitHubUser.getUser();
+		var repos = user.orgRepos("Raizlabs", function(err, repos){
+			if (err) {res.send(err)};
+			res.send(repos);
+		});
+	};
+});
+
+app.post("/issue/:title/:body", function(req, res){
+	
+});
+
+app.get("/auth/:user/:pwd", function(req, res){
+	var user = req.params.user;
+	var pwd = req.params.pwd;
+
+	console.log(user);
+
+	gitHubUser = new Github({
+		username: user,
+		password: pwd,
+		auth: "basic"
+	});
+
+	var newUser = gitHubUser.getUser();
+	console.log(newUser);
+	res.send(newUser);
 });
 
 var port = Number(process.env.PORT || 5000);

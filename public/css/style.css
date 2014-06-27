@@ -198,11 +198,40 @@ body {
 .github-options {
 	border-left: 1px solid #d8d8d8;
 	float: right;
+	overflow-y: scroll;
 }
 
-.issue-name {
+.issue-name, .repo-name {
 	width: 100%;
 	font-size: 25px;
+
+	cursor: pointer;
+}
+
+.signin-prompt {
+	height: 200px;
+	width: 400px;
+	position: absolute;
+	top: 100px;
+	left: 35%;
+	background-color: #d8d8d8;
+}
+
+.hidden {
+	display: none;
+}
+
+.signin-btn, .cancel-btn {
+	height: 50px;
+	width: 100px;
+}
+
+.issue-form {
+	height: 400px;
+	width: 600px;
+	position: absolute;
+	top: 100px;
+	left: 20%;
 }
 
 svg {

@@ -28,6 +28,7 @@
     "express3-handlebars": "^0.5.0",
     "firebase": "^1.0.17",
     "github": "^0.2.0",
+    "github-api": "^0.7.0",
     "handlebars": "^2.0.0-alpha.4",
     "lodash": "^2.4.1",
     "logfmt": "^1.1.2",
